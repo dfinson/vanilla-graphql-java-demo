@@ -1,0 +1,47 @@
+# GraphQL doesn't natively
+# support 64 bit signed integer,
+# so we're defining it here
+scalar Long
+
+# Author object type
+type Author  {
+    blogPosts: [BlogPost] 
+    email: String 
+    id: Long
+    name: String 
+}
+
+# BlogPost object type
+type BlogPost  {
+    author: Author 
+    content: String 
+    id: Long
+    title: String 
+}
+
+# Mutation root
+type Mutation {
+    createAuthor(input: AuthorInput): Author 
+    createBlogPost(authorId: Long, input: BlogPostInput): BlogPost
+}
+
+# Query root
+type Query {
+    authorById(id: Long): Author
+}
+
+# Author input type
+input AuthorInput  {
+    blogPosts: [BlogPostInput] 
+    email: String 
+    id: Long
+    name: String 
+}
+
+# BlogPost input type
+input BlogPostInput  {
+    author: AuthorInput 
+    content: String 
+    id: Long
+    title: String 
+}
